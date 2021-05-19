@@ -2,17 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class PersonalPage extends StatelessWidget {
+class PersonalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-//       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: FloatAppBar(),//AppBar(title: Text('Account info')),
-        body: Content(),
-      ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: FloatAppBar(),
+      body: Content(),
     );
   }
 }
@@ -159,7 +155,7 @@ class Content extends StatelessWidget {
           ),
           MaterialButton(
             child: Text('log out'),
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false),
           ),
           MaterialButton(
             child: Text('delete account'),
