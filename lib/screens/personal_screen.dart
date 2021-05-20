@@ -154,11 +154,15 @@ class Content extends StatelessWidget {
             ),
           ),
           MaterialButton(
-            child: Text('log out'),
+            child: Text('Confirm'),
+            onPressed: () {},
+          ),
+          MaterialButton(
+            child: Text('Log out'),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false),
           ),
           MaterialButton(
-            child: Text('delete account'),
+            child: Text('Delete account'),
             onPressed: () {},
           ),
         ],

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:acloud_mobile/userFile.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
@@ -16,7 +19,16 @@ class DashboardScreen extends StatelessWidget {
         child: Icon(Icons.add),
         foregroundColor: Colors.white,
         backgroundColor: Colors.black,
-        onPressed: () {},
+        onPressed: () async {
+          FilePickerResult result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            File file = File(result.files.single.path);
+            print(file.uri);
+          } else {
+            // User canceled the picker
+          }
+        },
       ),
     );
   }
@@ -156,9 +168,12 @@ class Content extends StatelessWidget {
 }
 
 class UserFileWidget extends StatelessWidget {
-  UserFile userFile;
+  final UserFile userFile;
+  var menuPublicDownloadText;
 
-  UserFileWidget(this.userFile);
+  UserFileWidget(this.userFile) {
+    this.menuPublicDownloadText = userFile.canBeDownloadedPublicly ? 'Disable downloading' : 'Share';
+  }
 
   Widget _isShared() {
     bool can = userFile.canBeDownloadedPublicly;
@@ -178,8 +193,12 @@ class UserFileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FocusedMenuHolder(
+      blurBackgroundColor: Colors.grey,
+      duration: Duration(milliseconds: 300),
+      animateMenuItems: false,
+      blurSize: 0.1,
       menuBoxDecoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8))
+        borderRadius: BorderRadius.all(Radius.circular(8))
       ),
       onPressed: () {
         print('downloading...');
@@ -198,7 +217,7 @@ class UserFileWidget extends StatelessWidget {
             }
         ),
         FocusedMenuItem(
-            title: Text(userFile.canBeDownloadedPublicly ? 'Disable downloading' : 'Share'), // should depend on availability of file
+            title: Text(this.menuPublicDownloadText), // should depend on availability of file
             onPressed: () {
               if (userFile.canBeDownloadedPublicly) {
                 print('disabling...');

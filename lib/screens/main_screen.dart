@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
-              ElevatedButton(
+              MaterialButton(
                 child: Text('start'),
                 onPressed: () {
                   // entering app

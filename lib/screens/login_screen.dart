@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
-              ElevatedButton(
+              MaterialButton(
                 child: Text('LOGIN'),
                 onPressed: () {
                   // entering app
