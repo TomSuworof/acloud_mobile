@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override
@@ -15,8 +17,14 @@ class MainScreenState extends State<MainScreen> {
   var _luckyNumber = '';
 
   Future<String> getResponseBody() async {
-    var url = Uri.parse('https://acl0ud.herokuapp.com/api');
-    var response = await http.get(url);
+    final params = {
+      'clientId': dotenv.env['CLIENT_ID'],
+      'clientName': dotenv.env['CLIENT_NAME'],
+      'clientSecret': dotenv.env['CLIENT_SECRET']
+    }; // todo add to another file
+    print(params);
+    final url = Uri.https('acl0ud.herokuapp.com', '/api', params);
+    final response = await http.get(url);
     String body = response.body;
     return body;
   }
