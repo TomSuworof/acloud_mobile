@@ -13,29 +13,30 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   RefreshController _refreshController = RefreshController(initialRefresh: true);
 
-  var _luckyText = '';
-  var _luckyNumber = '';
-
   Future<String> getResponseBody() async {
     final params = {
       'clientId': dotenv.env['CLIENT_ID'],
       'clientName': dotenv.env['CLIENT_NAME'],
       'clientSecret': dotenv.env['CLIENT_SECRET']
-    }; // todo add to another file
-    print(params);
+    };
+    print('params: $params');
     final url = Uri.https('acl0ud.herokuapp.com', '/api', params);
     final response = await http.get(url);
     String body = response.body;
+    print('body: $body');
     return body;
   }
 
   void _onRefresh() async {
-    getResponseBody().then((value) =>
-        setState(() {
-          _luckyText = jsonDecode(value)['msg'];
-          _luckyNumber = jsonDecode(value)['number'].toString();
-        }));
+    var text;
+    var number;
+    await getResponseBody().then((value) {
+      text = jsonDecode(value)['msg'];
+      number = jsonDecode(value)['number'];
+    });
     _refreshController.refreshCompleted();
+    assert(text == 'This shit is working' && number >= 0);
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   void _onLoading() async {
@@ -64,20 +65,20 @@ class MainScreenState extends State<MainScreen> {
                       .textTheme
                       .headline1,
                 ),
-                SizedBox(
-                  height: 24,
-                ),
-                MaterialButton(
-                  child: Text('start'),
-                  onPressed: () {
-                    // entering app
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                ),
-                SizedBox(height: 80),
-                Text(_luckyText),
-                SizedBox(height: 20),
-                Text('Your lucky number is $_luckyNumber')
+                // SizedBox(
+                //   height: 24,
+                // ),
+                // MaterialButton(
+                //   child: Text('start'),
+                //   onPressed: () {
+                //     // entering app
+                //     Navigator.pushReplacementNamed(context, '/login');
+                //   },
+                // ),
+                // SizedBox(height: 80),
+                // Text(_luckyText),
+                // SizedBox(height: 20),
+                // Text('Your lucky number is $_luckyNumber')
               ],
             ),
           ),
@@ -86,6 +87,8 @@ class MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+// todo replace it with splash screen and futurebuilder somehow
 
 // class ApiWidget extends StatefulWidget {
 //   @override

@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         accentColor: Colors.grey,
       ),
       routes: {
-        '/' : (context) => MainScreen(),
+        '/': (context) => MainScreen(),
         '/login': (context) => LoginScreen(),
         '/dashboard': (context) => DashboardScreen(),
         '/personal': (context) => PersonalScreen(),
