@@ -87,7 +87,7 @@ class _FloatAppBarState extends State<FloatAppBar> {
                       type: MaterialType.transparency,
                       child: IconButton(
                         icon: Icon(Icons.admin_panel_settings),
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(context, '/unknown'),
                       ),
                     ),
                   ],
