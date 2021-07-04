@@ -5,7 +5,13 @@ class UserFile {
   List<int> content;
   bool canBeDownloadedPublicly;
 
-  UserFile({this.id, this.author, this.filename, this.content, this.canBeDownloadedPublicly});
+  UserFile({
+    this.id,
+    this.author,
+    this.filename,
+    this.content,
+    this.canBeDownloadedPublicly
+  });
 
   UserFile.fromJson(Map<String, Object> jsonString) {
     this.id = jsonString['id'];

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:acloud_mobile/enteties/user.dart';
 import 'package:flutter/material.dart';
 
 class PersonalScreen extends StatelessWidget {
@@ -27,13 +28,13 @@ class _FloatAppBarState extends State<FloatAppBar> {
 
   _getUserStatus() {
     if (Random().nextInt(10) > 5) {
-      return 'admin';
+      return 'ROLE_ADMIN';
     } else {
-      return 'user';
+      return 'ROLE_USER';
     }
   }
 
-  _isAdmin() => _userStatus == 'admin';
+  _isAdmin() => _userStatus == 'ROLE_ADMIN';
 
   @override
   void initState() {
@@ -87,7 +88,7 @@ class _FloatAppBarState extends State<FloatAppBar> {
                       type: MaterialType.transparency,
                       child: IconButton(
                         icon: Icon(Icons.admin_panel_settings),
-                        onPressed: () => Navigator.pushNamed(context, '/unknown'),
+                        onPressed: () => Navigator.pushNamed(context, '/admin'),
                       ),
                     ),
                   ],
@@ -100,38 +101,59 @@ class _FloatAppBarState extends State<FloatAppBar> {
   }
 }
 
-class Content extends StatelessWidget {
+class Content extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ContentState();
+}
+
+class _ContentState extends State<Content> {
+
+  User _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _user = User(
+        id: 0,
+        username: 'noname',
+        email: 'example@example.com',
+        password: '12345678',
+        role: 'ROLE_ADMIN'
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.all(15),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text('Username:', style: Theme.of(context).textTheme.subtitle1),
           TextFormField(
-            initialValue: 'noname',
+            initialValue: this._user.username,
             enabled: false,
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 15),
               hintText: 'Your username'
             ),
           ),
+          Text('Email:', style: Theme.of(context).textTheme.subtitle1),
           TextFormField(
-            initialValue: 'example@example.com',
+            initialValue: this._user.email,
             enabled: true,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 hintText: 'Your email'
             ),
           ),
+          Text('Password:', style: Theme.of(context).textTheme.subtitle1),
           TextFormField(
             obscureText: true,
-            initialValue: '12345678',
+            initialValue: this._user.password,
             enabled: true,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 hintText: 'Current password'
             ),
           ),
@@ -140,7 +162,6 @@ class Content extends StatelessWidget {
             enabled: true,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 hintText: 'New password'
             ),
           ),
@@ -149,12 +170,11 @@ class Content extends StatelessWidget {
             enabled: true,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                hintText: 'Confirm new password'
+                hintText: 'Confirm your new password'
             ),
           ),
           MaterialButton(
-            child: Text('Confirm'),
+            child: Text('Submit'),
             onPressed: () {},
           ),
           MaterialButton(
@@ -163,11 +183,12 @@ class Content extends StatelessWidget {
           ),
           MaterialButton(
             child: Text('Delete account'),
-            onPressed: () {},
+            onPressed: () {
+              // send request to admin
+            },
           ),
         ],
       ),
     );
   }
-
 }

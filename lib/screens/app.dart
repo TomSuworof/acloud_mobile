@@ -1,3 +1,4 @@
+import 'package:acloud_mobile/screens/admin_screen.dart';
 import 'package:acloud_mobile/screens/main_screen.dart';
 import 'package:acloud_mobile/screens/login_screen.dart';
 import 'package:acloud_mobile/screens/dashboard_screen.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/dashboard': (context) => DashboardScreen(),
         '/personal': (context) => PersonalScreen(),
+        '/admin': (context) => AdminScreen(),
       },
       initialRoute: '/',
       // onGenerateRoute: (settings) {
