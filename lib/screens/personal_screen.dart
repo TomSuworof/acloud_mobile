@@ -16,13 +16,17 @@ class PersonalScreen extends StatelessWidget {
 
 class FloatAppBar extends StatefulWidget with PreferredSizeWidget {
   @override
-  State<StatefulWidget> createState() => _FloatAppBarState();
+  State<StatefulWidget> createState() => _FloatAppBarState(preferredSize);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
 class _FloatAppBarState extends State<FloatAppBar> {
+
+  Size preferredSize;
+
+  _FloatAppBarState(this.preferredSize);
 
   var _userStatus;
 
@@ -52,7 +56,7 @@ class _FloatAppBarState extends State<FloatAppBar> {
               top: 8,
               right: 15,
               left: 15,
-              height: 45,
+              height: preferredSize.height * 0.8,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -124,71 +128,109 @@ class _ContentState extends State<Content> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ListView(
       padding: EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Username:', style: Theme.of(context).textTheme.subtitle1),
-          TextFormField(
+      children: [
+        Text('Username:', style: Theme
+            .of(context)
+            .textTheme
+            .headline6),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: TextFormField(
             initialValue: this._user.username,
             enabled: false,
             decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Your username'
+                hintText: 'Your username'
             ),
           ),
-          Text('Email:', style: Theme.of(context).textTheme.subtitle1),
-          TextFormField(
+        ),
+        Text('Email:', style: Theme
+            .of(context)
+            .textTheme
+            .headline6),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: TextFormField(
             initialValue: this._user.email,
             enabled: true,
             decoration: InputDecoration(
-                border: InputBorder.none,
                 hintText: 'Your email'
             ),
           ),
-          Text('Password:', style: Theme.of(context).textTheme.subtitle1),
-          TextFormField(
+        ),
+        Text('Password:', style: Theme
+            .of(context)
+            .textTheme
+            .headline6),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: TextFormField(
             obscureText: true,
             initialValue: this._user.password,
             enabled: true,
             decoration: InputDecoration(
-                border: InputBorder.none,
                 hintText: 'Current password'
             ),
           ),
-          TextFormField(
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: TextFormField(
             obscureText: true,
             enabled: true,
             decoration: InputDecoration(
-                border: InputBorder.none,
                 hintText: 'New password'
             ),
           ),
-          TextFormField(
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: TextFormField(
             obscureText: true,
             enabled: true,
             decoration: InputDecoration(
-                border: InputBorder.none,
                 hintText: 'Confirm your new password'
             ),
           ),
-          MaterialButton(
+        ),
+        Center(
+          child: MaterialButton(
+            color: Theme
+                .of(context)
+                .colorScheme
+                .onPrimary,
             child: Text('Submit'),
-            onPressed: () {},
+            onPressed: () {
+              // send request for updating
+              // load new content page
+              Navigator.of(context).pop();
+            },
           ),
-          MaterialButton(
+        ),
+        Center(
+          child: MaterialButton(
+            color: Theme
+                .of(context)
+                .buttonColor,
             child: Text('Log out'),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false),
+            onPressed: () =>
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/login', (Route<dynamic> route) => false),
           ),
-          MaterialButton(
+        ),
+        Center(
+          child: MaterialButton(
+            color: Theme
+                .of(context)
+                .buttonColor,
             child: Text('Delete account'),
             onPressed: () {
               // send request to admin
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

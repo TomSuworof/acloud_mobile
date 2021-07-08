@@ -37,13 +37,17 @@ class DashboardScreen extends StatelessWidget {
 
 class FloatAppBar extends StatefulWidget with PreferredSizeWidget{
   @override
-  _FloatAppBarState createState() => _FloatAppBarState();
+  _FloatAppBarState createState() => _FloatAppBarState(preferredSize);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
 class _FloatAppBarState extends State<FloatAppBar>  {
+
+  Size preferredSize;
+
+  _FloatAppBarState(this.preferredSize);
 
   FocusNode _searchFieldFocusNode;
 
@@ -69,7 +73,7 @@ class _FloatAppBarState extends State<FloatAppBar>  {
               top: 8,
               right: 15,
               left: 15,
-              height: 45,
+              height: preferredSize.height * 0.8,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,

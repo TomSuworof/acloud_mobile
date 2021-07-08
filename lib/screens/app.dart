@@ -3,6 +3,7 @@ import 'package:acloud_mobile/screens/main_screen.dart';
 import 'package:acloud_mobile/screens/login_screen.dart';
 import 'package:acloud_mobile/screens/dashboard_screen.dart';
 import 'package:acloud_mobile/screens/personal_screen.dart';
+import 'package:acloud_mobile/screens/registration_screen.dart';
 import 'package:acloud_mobile/screens/unknown_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
         '/': (context) => MainScreen(),
         '/unknown': (context) => UnknownScreen(),
         '/login': (context) => LoginScreen(),
+        '/registration': (context) => RegistrationScreen(),
         '/dashboard': (context) => DashboardScreen(),
         '/personal': (context) => PersonalScreen(),
         '/admin': (context) => AdminScreen(),

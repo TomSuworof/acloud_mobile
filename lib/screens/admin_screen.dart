@@ -5,6 +5,7 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: FloatAppBar(),
       body: Content(),
@@ -27,7 +28,7 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
               top: 8,
               right: 15,
               left: 15,
-              height: 45,
+              height: preferredSize.height * 0.8,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -86,6 +87,16 @@ class _ContentState extends State<Content> {
     _users.add(User(id: 1, username: 'nonamenononononononon', role: 'ROLE_USER'));
     _users.add(User(id: 2, username: 'omgomgomgomgomgogmogm', role: 'ROLE_USER'));
     _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+    _users.add(User(id: 3, username: 'aaaaaaaaaaaaaaaaaa', role: 'ROLE_USER'));
+
   }
 
   List<TableRow> _getUserRows() {
@@ -117,19 +128,21 @@ class _ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
-      child: Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        border: TableBorder.all(color: Theme.of(context).accentColor),
-        children: [
-          TableRow(children : [
-            _TableCell(value: 'ID', isHeader: true),
-            _TableCell(value: 'Username', isHeader: true),
-            _TableCell(value: 'Role', isHeader: true),
-            _TableCell(value: 'Actions', isHeader: true),
-          ]),
-          ..._getUserRows(),
-        ],
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 85, left: 15, right: 15),
+        child: Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          border: TableBorder.all(color: Theme.of(context).accentColor),
+          children: [
+            TableRow(children : [
+              _TableCell(value: 'ID', isHeader: true),
+              _TableCell(value: 'Username', isHeader: true),
+              _TableCell(value: 'Role', isHeader: true),
+              _TableCell(value: 'Actions', isHeader: true),
+            ]),
+            ..._getUserRows(),
+          ],
+        ),
       ),
     );
   }
@@ -142,11 +155,22 @@ class _TableCell extends StatelessWidget {
 
   _TableCell({this.value, this.isHeader});
 
-  Text _getText(BuildContext context) {
+  Widget _getText(BuildContext context) {
     if (this.isHeader) {
-      return Text(this.value, style: Theme.of(context).textTheme.subtitle2, softWrap: true);
+      return Text(this.value, style: Theme
+          .of(context)
+          .textTheme
+          .subtitle2, softWrap: true);
     } else {
-      return Text(this.value, softWrap: true,);
+      return SelectableText(
+        this.value,
+        toolbarOptions: ToolbarOptions(
+          copy: true,
+          selectAll: false,
+          cut: false,
+          paste: false,
+        ),
+      );
     }
   }
 
@@ -154,7 +178,7 @@ class _TableCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableCell(
         child: Padding(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(3),
           child: _getText(context),
         )
     );
