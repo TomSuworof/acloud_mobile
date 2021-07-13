@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class LoginScreen extends StatelessWidget {
+class PasswordResetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +53,7 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text(
-                          'Login',
+                          'Password reset',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -70,7 +68,22 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class Content extends StatelessWidget {
+class Content extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ContentState();
+}
+
+class _ContentState extends State<Content> {
+
+  bool _showEmail;
+  String _email;
+
+  @override
+  void initState() {
+    super.initState();
+    _showEmail = false;
+    _email = 'e*******@example.com';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +92,7 @@ class Content extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Username:', style: Theme
+          Text('Enter your username:', style: Theme
               .of(context)
               .textTheme
               .headline6),
@@ -92,77 +105,37 @@ class Content extends StatelessWidget {
               ),
             ),
           ),
-          Text('Password:', style: Theme
-              .of(context)
-              .textTheme
-              .headline6),
-          Container(
-            margin: EdgeInsets.only(bottom: 20),
-            child: TextFormField(
-              decoration: InputDecoration(
-                // border: InputBorder.none,
-                hintText: 'Password',
-              ),
-              obscureText: true,
-            ),
-          ),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                MaterialButton(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .onPrimary,
-                  child: Text('Log In'),
-                  onPressed: () {
-                    // entering app
-                    Navigator.pushReplacementNamed(context, '/dashboard');
-                  },
-                ),
-                MaterialButton(
-                  color: Theme
-                      .of(context)
-                      .buttonColor,
-                  child: Text('Sign Up'),
-                  onPressed: () {
-                    // entering app
-                    Navigator.pushNamed(context, '/registration');
-                  },
-                )
-              ]
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
-            child: InkWell(
-              child: Text(
-                'Forgot password',
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed('/forgot_password');
+          Center(
+            child:
+            MaterialButton(
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .onPrimary,
+              child: Text('Submit'),
+              onPressed: () {
+                // send request
+                // change visibility
+                setState(() {
+                  _showEmail = true;
+                });
               },
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: InkWell(
-              child: Text(
-                'Source code',
-                style: TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline
-                ),
-              ),
-              onTap: () async {
-                const _url = 'https://github.com/TomSuworof/acloud_mobile';
-                await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
-              },
-            ),
-          ),
+          Visibility(
+              visible: _showEmail,
+              child: Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  'Message was sent to $_email',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline6,
+                  softWrap: true,
+                ), // todo
+              )
+          )
         ],
       ),
     );

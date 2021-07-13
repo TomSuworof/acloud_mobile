@@ -7,6 +7,8 @@ import 'package:acloud_mobile/screens/registration_screen.dart';
 import 'package:acloud_mobile/screens/unknown_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'password_reset_screen.dart';
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class App extends StatelessWidget {
         '/': (context) => MainScreen(),
         '/unknown': (context) => UnknownScreen(),
         '/login': (context) => LoginScreen(),
+        '/forgot_password': (context) => PasswordResetScreen(),
         '/registration': (context) => RegistrationScreen(),
         '/dashboard': (context) => DashboardScreen(),
         '/personal': (context) => PersonalScreen(),
